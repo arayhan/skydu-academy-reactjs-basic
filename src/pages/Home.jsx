@@ -62,6 +62,11 @@ class Home extends Component {
 				>
 					{this.state.isDarkMode ? "Light Mode" : "Dark Mode"}
 				</button>
+
+				{/* NOTES : LUPA NGASI TAU CARA CONDITIONAL RENDERING KAYA GINI :
+					this.state.isShowCards && ()
+					!this.state.isShowCards && 
+				 */}
 				{this.state.isShowCards ? (
 					<div className="card-container">
 						{this.state.listPokemon.map((pokemon, index) => {
