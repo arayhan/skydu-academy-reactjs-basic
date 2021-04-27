@@ -7,26 +7,17 @@ class Home extends Component {
 		title: "Home",
 		isShowCards: true,
 		isDarkMode: false,
-		listPokemon: [
-			{
-				title: "Charizard",
-				like: 0,
-				deskripsi:
-					"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem ducimus eligendi modi quis natus? Earum, distinctio? Perspiciatis nostrum ab repellendus exercitationem, quidem tempora assumenda debitis libero natus, sed, molestiae doloremque!",
-			},
-			{
-				title: "Pikachu",
-				like: 0,
-				deskripsi:
-					"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem ducimus eligendi modi quis natus? Earum, distinctio? Perspiciatis nostrum ab repellendus exercitationem, quidem tempora assumenda debitis libero natus, sed, molestiae doloremque!",
-			},
-			{
-				title: "Bulbasaur",
-				like: 0,
-				deskripsi:
-					"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem ducimus eligendi modi quis natus? Earum, distinctio? Perspiciatis nostrum ab repellendus exercitationem, quidem tempora assumenda debitis libero natus, sed, molestiae doloremque!",
-			},
-		],
+		listPokemon: [],
+	};
+
+	componentDidMount() {
+		this.fetchPokemon();
+	}
+
+	fetchPokemon = () => {
+		fetch("https://pokeapi.co/api/v2/pokemon")
+			.then((data) => data.json())
+			.then((json) => this.setState({ listPokemon: json.results }));
 	};
 
 	handleDarkMode = () => {
@@ -44,6 +35,7 @@ class Home extends Component {
 	};
 
 	render() {
+		console.log(this.state.listPokemon);
 		return (
 			<div>
 				<h1>Halaman {this.state.title}</h1>
@@ -73,7 +65,7 @@ class Home extends Component {
 							return (
 								<Card
 									isDarkMode={this.state.isDarkMode}
-									title={pokemon.title}
+									title={pokemon.name}
 									like={pokemon.like}
 									deskripsi={pokemon.deskripsi}
 									handleCopyDeskripsi={this.handleCopyDeskripsi}

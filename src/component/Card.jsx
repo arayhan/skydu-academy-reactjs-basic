@@ -6,7 +6,6 @@ const Card = (props) => {
 	return (
 		<div className={`card ${props.isDarkMode ? "darkMode" : ""}`}>
 			<h1>{props.title}</h1>
-			<p onCopy={() => props.handleCopyDeskripsi()}>{props.deskripsi}</p>
 			<Link to={`/detail/${props.title}`}>Read More</Link>
 			<button onClick={() => props.handleLike()}>Like</button> : {props.like}
 		</div>
