@@ -4,6 +4,7 @@ class Detail extends Component {
 	state = {
 		params: this.props.match.params.pokemon,
 		details: null,
+		encounters: null,
 	};
 
 	componentDidMount() {
@@ -13,11 +14,21 @@ class Detail extends Component {
 	fetchPokemonDetail = () => {
 		fetch(`https://pokeapi.co/api/v2/pokemon/${this.state.params}`)
 			.then((data) => data.json())
-			.then((json) => this.setState({ details: json }));
+			.then((json) => {
+				this.setState({ details: json });
+				this.fetchPokemonEncounters(json.location_area_encounters);
+			});
+	};
+
+	fetchPokemonEncounters = (encountersURL) => {
+		fetch(encountersURL)
+			.then((data) => data.json())
+			.then((json) => this.setState({ encounters: json }));
 	};
 
 	render() {
-		const { details, params } = this.state;
+		const { details, params, encounters } = this.state;
+		console.log(encounters);
 		return (
 			<div>
 				<div>Detail Pokemon : {params}</div>
@@ -30,6 +41,16 @@ class Detail extends Component {
 						<img src={details.sprites.back_shiny} alt="" />
 						<img src={details.sprites.back_shiny_female} alt="" />
 						<img src={details.sprites.front_default} alt="" />
+
+						{!encounters && <div>Loading Encounters...</div>}
+						{encounters && encounters.length && (
+							<div>
+								<h1>Encounters</h1>
+								{encounters.map((encounter) => (
+									<div>{encounter.location_area.name}</div>
+								))}
+							</div>
+						)}
 					</div>
 				)}
 			</div>
