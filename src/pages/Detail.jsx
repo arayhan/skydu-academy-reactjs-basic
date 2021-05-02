@@ -5,6 +5,8 @@ class Detail extends Component {
 		params: this.props.match.params.pokemon,
 		details: null,
 		encounters: null,
+		isError: false,
+		errorMessage: null,
 	};
 
 	componentDidMount() {
@@ -17,22 +19,28 @@ class Detail extends Component {
 			.then((json) => {
 				this.setState({ details: json });
 				this.fetchPokemonEncounters(json.location_area_encounters);
+			})
+			.catch((err) => {
+				console.log({ err });
+				this.setState({ isError: true, errorMessage: err.message });
 			});
 	};
 
 	fetchPokemonEncounters = (encountersURL) => {
 		fetch(encountersURL)
 			.then((data) => data.json())
-			.then((json) => this.setState({ encounters: json }));
+			.then((json) => this.setState({ encounters: json }))
+			.catch((err) => this.setState({ isError: true }));
 	};
 
 	render() {
-		const { details, params, encounters } = this.state;
+		const { details, params, encounters, errorMessage } = this.state;
 		console.log(encounters);
 		return (
 			<div>
 				<div>Detail Pokemon : {params}</div>
-				{!details && <div>Loading Details...</div>}
+				{errorMessage && <div>ERROR : {errorMessage}</div>}
+				{!details && !errorMessage && <div>Loading Details...</div>}
 				{details && (
 					<div>
 						<h1>Sprites</h1>
@@ -44,12 +52,12 @@ class Detail extends Component {
 
 						{!encounters && <div>Loading Encounters...</div>}
 						{encounters && encounters.length && (
-							<div>
+							<>
 								<h1>Encounters</h1>
 								{encounters.map((encounter) => (
 									<div>{encounter.location_area.name}</div>
 								))}
-							</div>
+							</>
 						)}
 					</div>
 				)}
