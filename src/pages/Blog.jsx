@@ -18,11 +18,11 @@ class Blog extends Component {
 
 	render() {
 		const { posts } = this.state;
-		console.log(posts);
 
 		return (
 			<div>
 				<h1>Blog</h1>
+				<Link to="/blog/create">Buat Blog</Link>
 				{!posts && <div>Loading Posts...</div>}
 				{posts && (
 					<table border="1">
@@ -43,7 +43,9 @@ class Blog extends Component {
 									<td>
 										<Link to={`/blog/${post.id}`}>Detail</Link>
 										<button>Edit</button>
-										<button>Hapus</button>
+										<button onClick={() => this.handleDelete(post.id)}>
+											Hapus
+										</button>
 									</td>
 								</tr>
 							))}
