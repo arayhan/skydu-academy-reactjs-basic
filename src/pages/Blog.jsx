@@ -16,13 +16,19 @@ class Blog extends Component {
 			.then((json) => this.setState({ posts: json }));
 	};
 
+	handleDelete = (id) => {
+		fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+			method: "DELETE",
+		});
+	};
+
 	render() {
 		const { posts } = this.state;
 
 		return (
 			<div>
 				<h1>Blog</h1>
-				<Link to="/blog/create">Buat Blog</Link>
+				<Link to="/blog/form">Buat Blog</Link>
 				{!posts && <div>Loading Posts...</div>}
 				{posts && (
 					<table border="1">
@@ -42,7 +48,8 @@ class Blog extends Component {
 									<td>{post.body}</td>
 									<td>
 										<Link to={`/blog/${post.id}`}>Detail</Link>
-										<button>Edit</button>
+										<br />
+										<Link to={`/blog/form/${post.id}`}>Edit</Link>
 										<button onClick={() => this.handleDelete(post.id)}>
 											Hapus
 										</button>
