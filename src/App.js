@@ -5,6 +5,7 @@ import Detail from "./pages/Detail";
 import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
 import BlogForm from "./pages/BlogForm";
+import BelajarHook from "./pages/BelajarHook";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 class App extends Component {
@@ -23,6 +24,9 @@ class App extends Component {
 							<li>
 								<Link to="/blog">Blog</Link>
 							</li>
+							<li>
+								<Link to="/belajar-hook">Belajar Hook</Link>
+							</li>
 						</ul>
 					</nav>
 					<Switch>
@@ -32,6 +36,7 @@ class App extends Component {
 						<Route path="/blog/form/:id" component={BlogForm} />
 						<Route path="/blog/form" component={BlogForm} />
 						<Route path="/blog" component={Blog} />
+						<Route path="/belajar-hook" component={BelajarHook} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
