@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Tick = () => {
-	const [title, setTitle] = useState("Component Detik");
+	const title = "Component Detik";
 	const [detik, setDetik] = useState(0);
 
 	useEffect(() => {
